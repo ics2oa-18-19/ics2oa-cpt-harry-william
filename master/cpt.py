@@ -1,5 +1,6 @@
 import random
 import arcade
+import math
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -68,19 +69,20 @@ class MyGame(arcade.Window):
         # Animate all the foods falling
         for food in self.food_list:
             food.y -= food.speed * delta_time
-            food.speed += 0.05
+            food.speed += 0.1
             if food.y < -20:
                 food.reset_pos()
 
     def on_mouse_press(self, mouse_x: float, mouse_y: float, button: int, modifiers: int):
-
-        if (mouse_x, mouse_y) - (food.x, food.y) <= 20:
-            print("CLICKED")
-        else:
-            pass
-
-
-
+        for food in self.food_list:
+            run = mouse_x - food.x
+            rise = mouse_y - food.y
+            distance = math.sqrt(run*run + rise*rise)
+            if distance <= 25:
+                print("Clicked")
+                food.reset_pos()
+            else:
+                pass
 
 
 def main():
