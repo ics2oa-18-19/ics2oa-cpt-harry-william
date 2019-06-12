@@ -39,6 +39,7 @@ class MyGame(arcade.Window):
         self.round = 0
         self.level = 1
         self.score = 0
+        self.health = 3
 
 
     def create_food(self):
@@ -65,9 +66,9 @@ class MyGame(arcade.Window):
         for food in self.food_list:
             arcade.draw_circle_filled(food.x, food.y,
                                       food.size, arcade.color.ORANGE)
-
-        score = str(self.score)
+        score = str(int(self.score))
         arcade.draw_text(score,20, SCREEN_HEIGHT - 40,arcade.color.BLACK, font_size=30)
+
 
     def update(self, delta_time):
 
@@ -77,20 +78,26 @@ class MyGame(arcade.Window):
             if food.y < -20:
                 food.reset_pos()
                 food.speed += 5
-
+                self.round += 1
+        if self.round == 10:
+            self.round = 1
+            self.level += 1
+            food.speed = 20
+            self.create_food()
 
     def on_mouse_press(self, mouse_x: float, mouse_y: float, button: int, modifiers: int):
         for food in self.food_list:
             run = mouse_x - food.x
             rise = mouse_y - food.y
             distance = math.sqrt(run*run + rise*rise)
+
             if distance <= 23:
                 food.reset_pos()
                 food.speed += 5
-                self.score += 10
-
+                self.score += 10 + (self.level - 1) * (5 / self.level)
+                self.round += 1
             else:
-                self.score -= 5
+                self.score -= 5 / self.level
 
 
 
