@@ -1,6 +1,7 @@
 import random
 import arcade
 import math
+import time
 
 WIDTH = 800
 HEIGHT = 600
@@ -96,33 +97,26 @@ class MyGame(arcade.Window):
                                           food.size, arcade.color.ORANGE)
             score = int(self.score)
             arcade.draw_text(f"Socre: {score}", 10, HEIGHT - 30, arcade.color.BLACK, font_size=20)
-            arcade.draw_text(f"Level:{self.level}", WIDTH - 80, HEIGHT - 30, arcade.color.BLACK, font_size=20)
+            arcade.draw_text(f"Level: {self.level}", WIDTH - 80, HEIGHT - 30, arcade.color.BLACK, font_size=20)
 
             if self.health == 0:
                 self.current_screen = "gameover"
 
         elif self.current_screen == "gameover":
-            self.food_list = []
-            self.create_food()
-            self.round = 0
-            self.level = 1
-            self.score = 0
-            self.health = 3
             arcade.set_background_color(arcade.color.ASH_GREY)
-            score = int(self.score)
-
-            arcade.draw_text("GAME OVER!", 60, HEIGHT / 2 - 40, arcade.color.RED, font_size=100)
-            arcade.draw_text(f"Socre: {score}", WIDTH / 2 , HEIGHT / 3 + 10,
+            arcade.draw_text("GAME OVER!", 60, HEIGHT / 2 - 35, arcade.color.RED, font_size=100)
+            arcade.draw_text(f"Score: {self.score}", WIDTH / 2, HEIGHT / 3 + 10,
                              arcade.color.BLACK, font_size=30)
-            arcade.draw_text(f"Level:{self.level}", WIDTH / 2 - 100, HEIGHT/ 3 + 10,
+            arcade.draw_text(f"Level:{self.level}", WIDTH / 2 - 100, HEIGHT / 3 + 10,
                              arcade.color.BLACK, font_size=30, anchor_x="center")
             arcade.draw_rectangle_filled(WIDTH - 40, 20, 80, 40, arcade.color.WHITE_SMOKE)
             arcade.draw_text("Menu", WIDTH - 70, 10, arcade.color.BLACK, font_size=20)
 
 
 
+
     def on_key_press(self,key, modifiers):
-  
+
         if key == arcade.key.ESCAPE:
                 self.current_screen = "menu"
 
@@ -136,12 +130,12 @@ class MyGame(arcade.Window):
                     self.round += 1
                     self.health -= 1
 
-            if self.round >= 10 * self.level:
+            if self.round >= 50 * self.level:
                 self.round = 0
                 self.level += 1
                 self.create_food()
                 food.speed = 20
-        else:
+        elif self.current_screen == "menu":
             self.food_list = []
             self.create_food()
             self.round = 0
