@@ -51,11 +51,10 @@ class MyGame(arcade.Window):
         food.x = random.randrange(20,780)
         food.y = (SCREEN_HEIGHT + 20)
         food.size = 20
-        food.speed = 920
+        food.speed = 20
 
         self.food_list.append(food)
-
-
+        
 
     def on_draw(self):
         arcade.start_render()
@@ -66,7 +65,9 @@ class MyGame(arcade.Window):
             arcade.draw_circle_filled(food.x, food.y,
                                       food.size, arcade.color.ORANGE)
         score = str(int(self.score))
-        arcade.draw_text(score,20, SCREEN_HEIGHT - 40,arcade.color.BLACK, font_size=30)
+        arcade.draw_text(f"Socre: {score}",10, SCREEN_HEIGHT - 30,arcade.color.BLACK, font_size=20)
+        arcade.draw_text(f"Level:{self.level}",SCREEN_WIDTH - 80, SCREEN_HEIGHT - 30,arcade.color.BLACK, font_size=20)
+
         if self.health == 0:
             arcade.draw_text("GAME OVER!", 60, SCREEN_HEIGHT / 2 - 40, arcade.color.RED, font_size=100 )
             self.food_list = []
@@ -81,11 +82,11 @@ class MyGame(arcade.Window):
                 food.speed += 5
                 self.round += 1
                 self.health -= 1
-        if self.round == 50:
+        if self.round == 50 * self.level:
             self.round = 1
             self.level += 1
-            food.speed = 20
             self.create_food()
+            food.speed = 20
 
     def on_mouse_press(self, mouse_x: float, mouse_y: float, button: int, modifiers: int):
         for food in self.food_list:
