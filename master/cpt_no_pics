@@ -35,7 +35,6 @@ class MyGame(arcade.Window):
 
         self.food_list = []
         self.create_food()
-
         self.round = 0
         self.level = 1
         self.score = 0
@@ -52,7 +51,7 @@ class MyGame(arcade.Window):
         food.x = random.randrange(20,780)
         food.y = (SCREEN_HEIGHT + 20)
         food.size = 20
-        food.speed = 20
+        food.speed = 920
 
         self.food_list.append(food)
 
@@ -68,7 +67,9 @@ class MyGame(arcade.Window):
                                       food.size, arcade.color.ORANGE)
         score = str(int(self.score))
         arcade.draw_text(score,20, SCREEN_HEIGHT - 40,arcade.color.BLACK, font_size=30)
-
+        if self.health == 0:
+            arcade.draw_text("GAME OVER!", 60, SCREEN_HEIGHT / 2 - 40, arcade.color.RED, font_size=100 )
+            self.food_list = []
 
     def update(self, delta_time):
 
@@ -79,7 +80,8 @@ class MyGame(arcade.Window):
                 food.reset_pos()
                 food.speed += 5
                 self.round += 1
-        if self.round == 10:
+                self.health -= 1
+        if self.round == 50:
             self.round = 1
             self.level += 1
             food.speed = 20
@@ -98,7 +100,6 @@ class MyGame(arcade.Window):
                 self.round += 1
             else:
                 self.score -= 5 / self.level
-
 
 
 def main():
