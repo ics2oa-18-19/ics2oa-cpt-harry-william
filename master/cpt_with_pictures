@@ -51,9 +51,10 @@ class MyGame(arcade.Window):
         food.y = (HEIGHT + 20)
         food.size = 20
         food.speed = 20
-        clear = food.size = 0
-        
-            
+        clear_image = food.y
+
+
+
 
 
 
@@ -115,24 +116,20 @@ class MyGame(arcade.Window):
             arcade.set_background_color(arcade.color.ASH_GREY)
             num = self.random_tex
             num = random.randrange(3)
-
-
-
-            if num == 0:
+            if self.level == 1:
                 tex = chicken_leg
                 print(num)
 
-
-
-
-            elif num == 1:
+            elif self.level == 2:
                 tex = egg
                 print(num)
-
-
-            elif num == 2:
+            elif self.level == 3:
                 tex = beef
                 print(num)
+
+
+
+
 
 
 
